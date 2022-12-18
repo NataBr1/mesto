@@ -1,0 +1,25 @@
+.popup__input {
+  border: none;
+  width: 100%;
+  min-height: 27px;
+  padding: 0;
+  border-bottom: 1px solid black;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.21;
+}
+
+.popup__input:first-child {
+  margin-bottom: 30px;
+}
+
+.popup__input:last-child{
+  margin-bottom: 48px;
+}
+
+@media (max-width: 550px) {
+  .popup__input:last-child {
+    margin-bottom: 45px;
+  }
+}
+

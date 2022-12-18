@@ -1,0 +1,15 @@
+.profile__intro {
+  color: white;
+  display: grid;
+  grid-template-columns: minmax(294px, 1fr) 24px;
+  column-gap: 18px;
+  align-items: baseline;
+  align-content: center;
+}
+
+@media (max-width: 550px) {
+  .profile__intro {
+    text-align: center;
+    grid-template-columns: minmax(189px, 1fr) 24px;
+  }
+}

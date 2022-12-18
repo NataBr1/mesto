@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./pages/index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <meta name="description" content="Практическая работа 4 на Яндекс.Практикум">
+  <meta name="keywords" content="html, css, js">
+  <meta name="author" content="Наталья Брызгалова">
+</head>
+
+<body class="page">
+
+  <!-- Шапка -->
+  <header class="header">
+    <img class="header__logo" src="./images/logo.svg" alt="Изображение логотипа Место">
+  </header>
+
+  <main class="content">
+
+  <!-- Секция Профиль -->
+    <section class="profile">
+      <div class="profile__user">
+        <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар">
+        <div class="profile__intro">
+          <h1 class="profile__title" >Жак-Ив Кусто</h1>
+          <button class="profile__edit-botton link-hover"></button>
+          <p class="profile__subtitle" >Исследователь океана</p>
+        </div>
+      </div>
+
+      <div class="profile__add-bottom link-hover">
+        <img class="vector" src="./images/vector.svg" alt="Добавить">
+      </div>
+    </section>
+
+  <!-- Секция с фотографиями -->
+    <section class="elements">
+      <article class="element">
+        <img class="element__photo" src="./images/вулкан креницына, курильские острова.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Вулкан Куреницына</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+      <article class="element">
+        <img class="element__photo" src="./images/мраморный каньон рускеала, карелия.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Мраморный каньон</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+      <article class="element">
+        <img class="element__photo" src="./images/oзеро кезенойам, чечня.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Озеро Кезенойам</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+      <article class="element">
+        <img class="element__photo" src="./images/тиреберка,мурманская область.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Тиреберка</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+      <article class="element">
+        <img class="element__photo" src="./images/черские пески, забайкалье.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Черские пески</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+      <article class="element">
+        <img class="element__photo" src="./images/oзеро эльтон, волгоградская область.webp" alt="">
+        <div class="element__group">
+          <h2 class="element__title">Озеро Эльтон</h2>
+          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+        </div>
+      </article>
+
+    </section>
+
+  <!-- Подвал -->
+    <footer class="footer">
+      <h2 class="footer__title" >&#169; 2020 Mesto Russia</h2>
+    </footer>
+
+    <section class="popup popup_is-opened">
+      <form class="popup__container">
+        <button class="popup__closed link-hover"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <fieldset class="fieldset">
+          <input class="popup__input" type="text" value="Жак-Ив Кусто" required>
+          <input class="popup__input" type="text" value="Исследователь океана" required>
+        </fieldset>
+        <fieldset class="handlers">
+          <button class="handlers__button link-hover" type="submit">Сохранить</button>
+        </fieldset>
+      </form>
+
+    </section>
+
+  </main>
+
+  <script src="./scripts/index.js"></script>
+
+</body>
+</html>
+
