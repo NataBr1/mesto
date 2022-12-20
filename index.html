@@ -41,7 +41,8 @@
         <img class="element__photo" src="./images/вулкан креницына, курильские острова.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Вулкан Куреницына</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
+
         </div>
       </article>
 
@@ -49,7 +50,7 @@
         <img class="element__photo" src="./images/мраморный каньон рускеала, карелия.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Мраморный каньон</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
         </div>
       </article>
 
@@ -57,7 +58,7 @@
         <img class="element__photo" src="./images/oзеро кезенойам, чечня.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Озеро Кезенойам</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
         </div>
       </article>
 
@@ -65,7 +66,7 @@
         <img class="element__photo" src="./images/тиреберка,мурманская область.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Тиреберка</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
         </div>
       </article>
 
@@ -73,7 +74,7 @@
         <img class="element__photo" src="./images/черские пески, забайкалье.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Черские пески</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
         </div>
       </article>
 
@@ -81,7 +82,7 @@
         <img class="element__photo" src="./images/oзеро эльтон, волгоградская область.webp" alt="">
         <div class="element__group">
           <h2 class="element__title">Озеро Эльтон</h2>
-          <img class="element__like link-hover" src="./images/vector-like.svg" alt="">
+          <img class="element__like link-hover like__active" src="./images/vector-like.svg" alt="">
         </div>
       </article>
 
@@ -93,17 +94,15 @@
     </footer>
 
     <section class="popup">
-      <form class="popup__container">
+      <div class="popup__container">
+        <form class="popup__form">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input class="popup__input popup__input_name" type="text" value="Жак-Ив Кусто" required>
+          <input class="popup__input popup__input_job" type="text" value="Исследователь океана" required>
+          <button class="popup__button link-hover" type="submit">Сохранить</button>
+        </form>
         <button class="popup__closed link-hover" type="button"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <fieldset class="fieldset">
-          <input class="popup__input" type="text" value="Жак-Ив Кусто" required>
-          <input class="popup__input" type="text" value="Исследователь океана" required>
-        </fieldset>
-        <fieldset class="handlers">
-          <button class="handlers__button link-hover" type="submit">Сохранить</button>
-        </fieldset>
-      </form>
+        </div>
 
     </section>
 
