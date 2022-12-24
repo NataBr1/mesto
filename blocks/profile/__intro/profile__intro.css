@@ -2,7 +2,7 @@
   color: white;
   display: grid;
   grid-template-columns: minmax(294px, 1fr) 24px;
-  column-gap: 18px;
+  gap: 18px 16px;
   align-items: baseline;
   align-content: center;
 }
@@ -11,5 +11,7 @@
   .profile__intro {
     text-align: center;
     grid-template-columns: minmax(189px, 1fr) 24px;
+    gap: 10px 14px;
+    padding-left: 28px;
   }
 }

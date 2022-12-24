@@ -1,6 +1,5 @@
 .link-hover:hover {
-  opacity: .8;
-  transform: scale(.97);
+  opacity: .6;
   transition: .1s ease-in;
   cursor: pointer;
 }

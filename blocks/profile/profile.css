@@ -10,3 +10,9 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 550px) {
+  .profile {
+    margin-bottom: 36px;
+  }
+}
