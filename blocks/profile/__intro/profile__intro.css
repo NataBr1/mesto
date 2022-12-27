@@ -11,7 +11,7 @@
   .profile__intro {
     text-align: center;
     grid-template-columns: minmax(189px, 1fr) 24px;
-    gap: 10px 14px;
+    gap: 1px 10px;
     padding-left: 28px;
   }
 }
