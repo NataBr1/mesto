@@ -1,11 +1,17 @@
 const popupElementUser = document.querySelector('.popup_user'); /* Попап с редактированием профиля */
 const popupElementPlace = document.querySelector('.popup_place') /* Попап добавления карточки */
+const popupCloseButtonElement = document.querySelectorAll('.popup__closed'); /*Кнопка закрытия попапов, крестик*/
 const popupCloseButtonElementUser = popupElementUser.querySelector('.popup__closed_user'); /* Кнопка закрытия попапа профиля */
 const popupOpenButtonElementUser = document.querySelector('.profile__edit-button'); /* Кнопка открытия попапа профиля */
 const popupCloseButtonElementPlace = popupElementPlace.querySelector('.popup__closed_place'); /* Кнопка закрытия попапа новой карточки */
 const popupOpenButtonElementPlace = document.querySelector('.profile__add-button'); /* Кнопка открытия попапа новой карточки */
 const popupElementView = document.querySelector('.view'); /* Попап просмотра изображения */
 const popupCloseButtonElementView = popupElementView.querySelector('.popup__closed_view'); /*Кнопка закрытия просмотра изображения*/
+const elementGrid = document.querySelector('.elements'); /* Место для вставки template в HTML */
+const template = document.querySelector('#cards'); /* Находим template */
+const viewCaption = popupElementView.querySelector('.view__caption');
+const viewPhoto = popupElementView.querySelector('.view__photo');
+const viewAttributeLink = popupElementView.querySelector('.view__photo');
 
 /* Ищем формы и инпуты */
 const formElementUser = document.querySelector('.popup__form_user');
@@ -20,32 +26,33 @@ const profileIntro = document.querySelector('.profile__intro');
 const newProfileTitle = profileIntro.querySelector('.profile__title');
 const newProfileSubtitle = profileIntro.querySelector('.profile__subtitle');
 
-/* Функция открытия/закрытия попапа профиля */
-const openPopupUser = function() {
-  popupElementUser.classList.toggle('popup_opened');
-  nameUserInput.value = newProfileTitle.textContent;
-  jobInput.value = newProfileSubtitle.textContent;
+/*Функция открытия попапов*/
+const openPopup = function(popup) {
+  popup.classList.add('popup_opened');
 };
 
-/* Функция открытия/закрытия попапа новой карточки */
-const openPopupPlace = function() {
-  popupElementPlace.classList.toggle('popup_opened');
-}
-console.log(1)
+/*Функция закрытия попапов*/
+const closedPopup = function(popup) {
+  popup.classList.remove('popup_opened');
+};
 
-/* Функция открыти/закрытия попапа просмотра изображения */
-const openPopupView = function() {
-  popupElementView.classList.toggle('popup_opened');
-}
-console.log(2)
+/* Функция открытия попапа профиля */
+popupOpenButtonElementUser.addEventListener('click', function() {
+  nameUserInput.value = newProfileTitle.textContent;
+  jobInput.value = newProfileSubtitle.textContent;
+  openPopup(popupElementUser);
+});
 
-/* Вешаем слушателей на кнопки управления открытием/закрытием попапов */
-popupOpenButtonElementUser.addEventListener('click', openPopupUser);
-popupCloseButtonElementUser.addEventListener('click', openPopupUser);
-popupOpenButtonElementPlace.addEventListener('click', openPopupPlace);
-popupCloseButtonElementPlace.addEventListener('click', openPopupPlace);
-popupCloseButtonElementView.addEventListener('click', openPopupView);
-console.log(3)
+/* Функция открытия попапа добавления карточки */
+popupOpenButtonElementPlace.addEventListener('click', function() {
+  openPopup(popupElementPlace);
+});
+
+/* Функиция закрытия всеъ попапов */
+popupCloseButtonElement.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener('click', () => closedPopup(popup));
+});
 
 /* Сохранение новых данных о пользователе на странице */
 function handleFormUserSubmit (evt) {
@@ -56,7 +63,6 @@ function handleFormUserSubmit (evt) {
 }
 formElementUser.addEventListener('submit', handleFormUserSubmit);
 
-console.log(4)
 /* Массив с карточками */
 const initialCards = [
   {
@@ -85,11 +91,6 @@ const initialCards = [
   }
 ];
 
-/* Место для вставки template в HTML */
-const elementGrid = document.querySelector('.elements');
-/* Находим template */
-const template = document.querySelector('#cards');
-
 /* Отображение карточек из массива */
 const createCards = (item) => {
   const card = template.content.querySelector('.element').cloneNode(true);
@@ -99,7 +100,7 @@ const createCards = (item) => {
   linkPlace.src = item.link;
   const attributeAltPlace = card.querySelector('.element__photo');
   attributeAltPlace.alt = item.name;
-console.log(5)
+
   /* Лайк */
   card.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
@@ -109,15 +110,14 @@ console.log(5)
   card.querySelector('.element__delete').addEventListener('click', function () {
     card.remove();
   })
-console.log(6)
+
   /*Просмотр изображения*/
  linkPlace.addEventListener('click', function() {
-    openPopupView(item);
-    popupElementView.querySelector('.view__caption').textContent = item.name;
-    popupElementView.querySelector('.view__photo').src = item.link;
-    popupElementView.querySelector('.view__photo').alt = item.name;
+    openPopup(popupElementView);
+    viewCaption.textContent = item.name;
+    viewPhoto.src = item.link;
+    viewAttributeLink.alt = item.name;
   });
-console.log(7)
   return card;
 };
 
@@ -137,10 +137,11 @@ function handleFormPLaceSubmit (evt) {
   elementGrid.prepend(createCards(
     {
       name: namePlaceInput.value,
-      link: linkInput.value
+      link: linkInput.value,
     }));
-
   popupElementPlace.classList.remove('popup_opened');
+  namePlaceInput.value = '';
+  linkInput.value = '';
 };
 
 formElementPlace.addEventListener('submit', handleFormPLaceSubmit);
