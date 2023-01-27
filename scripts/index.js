@@ -59,7 +59,7 @@ function handleFormUserSubmit (evt) {
     evt.preventDefault();
     newProfileTitle.textContent = nameUserInput.value;
     newProfileSubtitle.textContent = jobInput.value;
-    popupElementUser.classList.remove('popup_opened');
+    closedPopup(popupElementUser);
 }
 formElementUser.addEventListener('submit', handleFormUserSubmit);
 
@@ -118,6 +118,7 @@ const createCards = (item) => {
     viewPhoto.src = item.link;
     viewAttributeLink.alt = item.name;
   });
+
   return card;
 };
 
@@ -139,7 +140,7 @@ function handleFormPLaceSubmit (evt) {
       name: namePlaceInput.value,
       link: linkInput.value,
     }));
-  popupElementPlace.classList.remove('popup_opened');
+  closedPopup(popupElementPlace);
   namePlaceInput.value = '';
   linkInput.value = '';
 };
