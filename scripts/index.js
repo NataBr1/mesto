@@ -1,7 +1,6 @@
 const popup = document.querySelectorAll('.popup');
 const popupElementUser = document.querySelector('.popup_user'); /* Попап с редактированием профиля */
 const popupElementPlace = document.querySelector('.popup_place') /* Попап добавления карточки */
-const popupUserContainer = popupElementUser.querySelector('.popup_user-container');
 const popupCloseButtonElement = document.querySelectorAll('.popup__closed'); /*Кнопка закрытия попапов, крестик*/
 const popupCloseButtonElementUser = popupElementUser.querySelector('.popup__closed_user'); /* Кнопка закрытия попапа профиля */
 const popupOpenButtonElementUser = document.querySelector('.profile__edit-button'); /* Кнопка открытия попапа профиля */
