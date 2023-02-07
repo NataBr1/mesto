@@ -9,67 +9,69 @@ const objForValidation = ({
 });
 
 // Включение стилизации ошибок ввода
-const showInputError = (formElement, inputElement, errorMessage) => {
+function showInputError (formElement, inputElement, errorMessage, object) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(objForValidation.inputErrorClass);
+  inputElement.classList.add(object.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(objForValidation.errorClass);
+  errorElement.classList.add(object.errorClass);
 };
 
 // Выключение стилизации ошибок ввода
-const hideInputError = (formElement, inputElement) => {
+function hideInputError (formElement, inputElement, object) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(objForValidation.inputErrorClass);
-  errorElement.classList.remove(objForValidation.errorClass);
+  inputElement.classList.remove(object.inputErrorClass);
+  errorElement.classList.remove(object.errorClass);
   errorElement.textContent = '';
 };
 
 // Проверка поля на валидность
-const checkInputValidity = (formElement, inputElement) => {
+function checkInputValidity (formElement, inputElement, object) {
   if (inputElement.validity.valid) {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, object);
   } else {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, object);
   }
 };
 
 // Добавляем обработчик всем полям формы
-const setEventListeners = (formElement) => {
-  const inputs = Array.from(formElement.querySelectorAll(objForValidation.inputSelector));
-  const buttonElement = formElement.querySelector(objForValidation.submitButtonSelector);
-  toggleButtonState(inputs, buttonElement);
+function setEventListeners (formElement, object) {
+  const inputs = Array.from(formElement.querySelectorAll(object.inputSelector));
+  const buttonElement = formElement.querySelector(object.submitButtonSelector);
+  toggleButtonState(inputs, buttonElement, object);
   inputs.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputs, buttonElement);
+      checkInputValidity(formElement, inputElement, object);
+      toggleButtonState(inputs, buttonElement, object);
     });
   });
 };
 
 // Проверка на валидность массива полей
-const hasInvalidInput = (inputs) => {
+function hasInvalidInput (inputs) {
   return inputs.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 };
 
 // Переключение кнопки СОХРАНИТЬ с активной на неактивную и наоборот
-const toggleButtonState = (inputs, buttonElement) => {
+function toggleButtonState (inputs, buttonElement, object) {
   if (hasInvalidInput(inputs)) {
-    buttonElement.classList.add(objForValidation.inactiveButtonClass);
+    buttonElement.setAttribute('disabled', true);
+    buttonElement.classList.add(object.inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(objForValidation.inactiveButtonClass);
+    buttonElement.removeAttribute('disabled');
+    buttonElement.classList.remove(object.inactiveButtonClass);
   }
 };
 
 // Добавляем обработчик всем формам
-const enableValidation = () => {
-  const forms = Array.from(document.querySelectorAll(objForValidation.formSelector));
+function enableValidation (object) {
+  const forms = Array.from(document.querySelectorAll(object.formSelector));
   forms.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, object);
   });
 };
-enableValidation();
+enableValidation(objForValidation);
