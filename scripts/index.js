@@ -34,6 +34,12 @@ const objForValidation = ({
   errorClass: 'popup__input-error_active' //сообщение об ошибке
 });
 
+const userFormValidator = new FormValidation(objForValidation, popupElementUser);
+userFormValidator.enableValidation(popupElementUser);
+
+const placeFormValidator = new FormValidation(objForValidation, popupElementPlace);
+placeFormValidator.enableValidation(popupElementPlace);
+
 
 // Функция открытия попапов
 function openPopup (popup) {
@@ -52,9 +58,7 @@ popupOpenButtonElementUser.addEventListener('click', () => {
   nameUserInput.value = newProfileTitle.textContent;
   jobInput.value = newProfileSubtitle.textContent;
   openPopup(popupElementUser);
-  clearHint();
-  clearRedLine();
-  disabledPopupButton(objForValidation);
+  userFormValidator.resetValidation();
 });
 
 // Функция открытия попапа добавления карточки
@@ -62,20 +66,18 @@ popupOpenButtonElementPlace.addEventListener('click', () => {
   openPopup(popupElementPlace);
   namePlaceInput.value = '';
   linkInput.value = '';
-  clearHint();
-  clearRedLine();
-  disabledPopupButton(objForValidation);
+  placeFormValidator.resetValidation();
 });
 
 // Функция закрытия попапов по крестику и оверлею
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-        closedPopup(popup)
-      }
-      if (evt.target.classList.contains('popup__closed')) {
-        closedPopup(popup)
-      }
+    if (evt.target.classList.contains('popup_opened')) {
+      closedPopup(popup)
+    }
+    if (evt.target.classList.contains('popup__closed')) {
+      closedPopup(popup)
+    }
   })
 });
 
@@ -87,29 +89,6 @@ function closeByEscape(evt) {
   };
 };
 
-//Функция скрытия красной линии под невалидным полем, применяем при открытии попапа второй раз
-function clearRedLine() {
-  const inputs = Array.from(document.querySelectorAll('.popup__input'));
-  inputs.forEach(input => {
-    input.classList.remove('popup__input_type_error');
-  });
-};
-
-// Функция скрытия подсказок об ошибках заполнения полей, применяем при открытии попапа второй раз
-function clearHint() {
-  const errorElements = Array.from(document.querySelectorAll('.popup__input-error'));
-  errorElements.forEach(errorElement => errorElement.textContent = '');
-};
-
-//Функция деактивации кнопки submit
-function disabledPopupButton(object) {
-  const popupButtons = Array.from(document.querySelectorAll('.popup__button'));
-  popupButtons.forEach(buttonElement => {
-    buttonElement.setAttribute('disabled', true);
-    buttonElement.classList.add(object.inactiveButtonClass);
-  })
-}
-
 // Сохранение новых данных о пользователе на странице
 function handleFormUserSubmit (evt) {
     evt.preventDefault();
@@ -120,7 +99,7 @@ function handleFormUserSubmit (evt) {
 formElementUser.addEventListener('submit', handleFormUserSubmit);
 
 // Функция просмотра фотографии в зуме
-function zoomPhoto(name, link) {
+function handleZoomPhoto(name, link) {
   openPopup(popupElementView);
   viewCaption.textContent = name;
   viewPhoto.src = link;
@@ -128,22 +107,20 @@ function zoomPhoto(name, link) {
 };
 
 // Отрисовка карточек
-initialCards.forEach((item) => {
-  const card = new Card(item, zoomPhoto);
-  const cardElement = card.generateCard();
-
-  elementGrid.append(cardElement);
-});
-
-const createCard = (data, zoomPhoto) => {
-  const card = new Card(data, zoomPhoto);
+const createCard = (data) => {
+  const card = new Card(data, '#cards', handleZoomPhoto);
   const elementList = card.generateCard();
   return elementList;
 }
 
+initialCards.forEach((item) => {
+  elementGrid.append(createCard(item));
+});
+
+
 // Добавление новой карточки
 const addCard = (data) => {
-  elementGrid.prepend(createCard(data, zoomPhoto));
+  elementGrid.prepend(createCard(data, handleZoomPhoto));
 };
 
 function handleFormPLaceSubmit (evt) {
@@ -151,19 +128,10 @@ function handleFormPLaceSubmit (evt) {
   const elementList = {
     name: namePlaceInput.value,
     link: linkInput.value,
-    zoomPhoto: zoomPhoto
+    handleZoomPhoto: handleZoomPhoto
   }
-
   addCard(elementList);
   closedPopup(popupElementPlace);
 };
 
 formElementPlace.addEventListener('submit', handleFormPLaceSubmit);
-
-// Валидация форм
-const forms = Array.from(document.querySelectorAll('.popup__form'));
-  forms.forEach((formElement) => {
-    const valid = new FormValidation(objForValidation, formElement);
-    valid.enableValidation();
-  });
-

@@ -1,13 +1,15 @@
 export default class Card {
-  constructor (data, zoomPhoto) {
+  constructor (data, templateSelector, handleZoomPhoto) {
     this._name = data.name;
     this._link = data.link;
-    this._zoomPhoto = zoomPhoto;
+    this._templateSelector = templateSelector;
+    this._handleZoomPhoto = handleZoomPhoto;
   }
 
+  // Метод получения разметки для карточки
   _getTamplate() {
     const cardElement = document
-    .querySelector('#cards')
+    .querySelector(this._templateSelector)
     .content
     .querySelector('.element')
     .cloneNode(true);
@@ -19,9 +21,14 @@ export default class Card {
   generateCard() {
     this._element = this._getTamplate();
 
-    this._element.querySelector('.element__photo').src = this._link;
-    this._element.querySelector('.element__title').textContent = this._name;
-    this._element.querySelector('.element__photo').alt = this._name;
+    this._cardPhoto = this._element.querySelector('.element__photo');
+    this._cardName = this._element.querySelector('.element__title');
+    this._cardLike = this._element.querySelector('.element__like');
+    this._cardDelete = this._element.querySelector('.element__delete');
+
+    this._cardPhoto.src = this._link;
+    this._cardPhoto.alt = this._name;
+    this._cardName.textContent = this._name;
 
     this._setEventListners();
 
@@ -30,21 +37,27 @@ export default class Card {
 
   // Слушатели
   _setEventListners() {
-    this._element.querySelector('.element__like').addEventListener('click', () => {
+    this._cardLike.addEventListener('click', () => {
       this._handleLikeClick();
     });
-    this._element.querySelector('.element__delete').addEventListener('click', () => {
-      this._element.remove();
+    this._cardDelete.addEventListener('click', () => {
+      this._handleCardDelete();
     });
-    this._element.querySelector('.element__photo').addEventListener('click', () => {
-      this._zoomPhoto(this._name, this._link);
+    this._cardPhoto.addEventListener('click', () => {
+      this._handleZoomPhoto(this._name, this._link);
     });
   }
 
   // Метод лайка
   _handleLikeClick() {
-    this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    this._cardLike.classList.toggle('element__like_active');
   }
+
+  // Метод удаления карточки
+  _handleCardDelete() {
+    this._element.remove();
+  }
+
 }
 
 

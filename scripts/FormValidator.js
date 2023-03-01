@@ -9,6 +9,8 @@ export default class FormValidation {
     this._inputErrorClass = object.inputErrorClass;
     this._errorClass = object.errorClass;
     this._formElement = formElement;
+    this._inputs = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   // Включение стилизации ошибок ввода
@@ -38,32 +40,43 @@ export default class FormValidation {
 
   // Добавляем обработчик всем полям формы
   _setEventListeners () {
-    const inputs = Array.from(this._formElement.querySelectorAll(this._inputSelector));
-    const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
-    this._toggleButtonState(inputs, buttonElement);
-    inputs.forEach((inputElement) => {
+    this._toggleButtonState();
+    this._inputs.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
-        this._toggleButtonState(inputs, buttonElement);
+        this._toggleButtonState();
       });
     });
   };
 
   // Проверка на валидность массива полей
-  _hasInvalidInput (inputs) {
-    return inputs.some((inputElement) => {
+  _hasInvalidInput () {
+    return this._inputs.some((inputElement) => {
       return !inputElement.validity.valid;
     })
   };
 
+  // Деактивация кнопки сабмит
+  _inactiveButton() {
+    this._buttonElement.setAttribute('disabled', true);
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+  }
+
+  // Метод сброса валидации
+  resetValidation = () => {
+    this._inactiveButton();
+    this._inputs.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
+
   // Переключение кнопки СОХРАНИТЬ с активной на неактивную и наоборот
-  _toggleButtonState (inputs, buttonElement) {
-    if (this._hasInvalidInput(inputs)) {
-      buttonElement.setAttribute('disabled', true);
-      buttonElement.classList.add(this._inactiveButtonClass);
+  _toggleButtonState () {
+    if (this._hasInvalidInput()) {
+      this._inactiveButton;
     } else {
-      buttonElement.removeAttribute('disabled');
-      buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.removeAttribute('disabled');
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
     }
   };
 
@@ -72,84 +85,3 @@ export default class FormValidation {
   };
 
 };
-
-
-
-
-// // ВАЛИДАЦИЯ ФОРМ
-// const objForValidation = ({
-//   formSelector: '.popup__form',
-//   inputSelector: '.popup__input',
-//   submitButtonSelector: '.popup__button',
-//   inactiveButtonClass: 'popup__button_disabled',
-//   inputErrorClass: 'popup__input_type_error', //красная линия
-//   errorClass: 'popup__input-error_active' //сообщение об ошибке
-// });
-
-// // Включение стилизации ошибок ввода
-// function showInputError (formElement, inputElement, errorMessage, object) {
-//   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-//   inputElement.classList.add(object.inputErrorClass);
-//   errorElement.textContent = errorMessage;
-//   errorElement.classList.add(object.errorClass);
-// };
-
-// // Выключение стилизации ошибок ввода
-// function hideInputError (formElement, inputElement, object) {
-//   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-//   inputElement.classList.remove(object.inputErrorClass);
-//   errorElement.classList.remove(object.errorClass);
-//   errorElement.textContent = '';
-// };
-
-// // Проверка поля на валидность
-// function checkInputValidity (formElement, inputElement, object) {
-//   if (inputElement.validity.valid) {
-//     hideInputError(formElement, inputElement, object);
-//   } else {
-//     showInputError(formElement, inputElement, inputElement.validationMessage, object);
-//   }
-// };
-
-// // Добавляем обработчик всем полям формы
-// function setEventListeners (formElement, object) {
-//   const inputs = Array.from(formElement.querySelectorAll(object.inputSelector));
-//   const buttonElement = formElement.querySelector(object.submitButtonSelector);
-//   toggleButtonState(inputs, buttonElement, object);
-//   inputs.forEach((inputElement) => {
-//     inputElement.addEventListener('input', () => {
-//       checkInputValidity(formElement, inputElement, object);
-//       toggleButtonState(inputs, buttonElement, object);
-//     });
-//   });
-// };
-
-// // Проверка на валидность массива полей
-// function hasInvalidInput (inputs) {
-//   return inputs.some((inputElement) => {
-//     return !inputElement.validity.valid;
-//   })
-// };
-
-// // Переключение кнопки СОХРАНИТЬ с активной на неактивную и наоборот
-// function toggleButtonState (inputs, buttonElement, object) {
-//   if (hasInvalidInput(inputs)) {
-//     buttonElement.setAttribute('disabled', true);
-//     buttonElement.classList.add(object.inactiveButtonClass);
-//   } else {
-//     buttonElement.removeAttribute('disabled');
-//     buttonElement.classList.remove(object.inactiveButtonClass);
-//   }
-// };
-
-// // Добавляем обработчик всем формам
-// function enableValidation (object) {
-//   const forms = Array.from(document.querySelectorAll(object.formSelector));
-//   forms.forEach((formElement) => {
-//     formElement.addEventListener('submit', (evt) => {
-//       evt.preventDefault();
-//     });
-//     setEventListeners(formElement, object);
-//   });
-// };
-// enableValidation(objForValidation);
