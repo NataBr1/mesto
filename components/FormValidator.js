@@ -56,15 +56,9 @@ export default class FormValidation {
     })
   };
 
-  // Деактивация кнопки сабмит
-  _inactiveButton() {
-    this._buttonElement.setAttribute('disabled', true);
-    this._buttonElement.classList.add(this._inactiveButtonClass);
-  }
-
-  // Метод сброса валидации
+    // Метод сброса валидации
   resetValidation = () => {
-    this._inactiveButton();
+    this._toggleButtonState();
     this._inputs.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
@@ -73,7 +67,8 @@ export default class FormValidation {
   // Переключение кнопки СОХРАНИТЬ с активной на неактивную и наоборот
   _toggleButtonState () {
     if (this._hasInvalidInput()) {
-      this._inactiveButton;
+      this._buttonElement.setAttribute('disabled', true);
+      this._buttonElement.classList.add(this._inactiveButtonClass);
     } else {
       this._buttonElement.removeAttribute('disabled');
       this._buttonElement.classList.remove(this._inactiveButtonClass);

@@ -1,12 +1,12 @@
 export default class Card {
-  constructor (data, templateSelector, handleZoomPhoto) {
+  constructor (data, templateSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
-    this._handleZoomPhoto = handleZoomPhoto;
+    this._handleCardClick = handleCardClick;
   }
 
-  // Метод получения разметки для карточки
+  // Метод возвращения разметки карточки
   _getTamplate() {
     const cardElement = document
     .querySelector(this._templateSelector)
@@ -44,7 +44,7 @@ export default class Card {
       this._handleCardDelete();
     });
     this._cardPhoto.addEventListener('click', () => {
-      this._handleZoomPhoto(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     });
   }
 
@@ -57,7 +57,6 @@ export default class Card {
   _handleCardDelete() {
     this._element.remove();
   }
-
 }
 
 
