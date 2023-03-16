@@ -13,6 +13,8 @@ import {popupElementUser,
         nameUserInput,
         jobInput} from '../utils/constants.js';
 
+import './index.css';
+
 //Создаем экземпляр класса профиля
 const userInfo = new UserInfo({
   nameSelector: '.profile__title',

@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./pages/index.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <meta name="description" content="Практическая работа 4 на Яндекс.Практикум">
@@ -14,7 +13,7 @@
 
   <!-- Шапка -->
   <header class="header">
-    <img class="header__logo" src="./images/logo.svg" alt="Изображение логотипа Место">
+    <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Изображение логотипа Место">
   </header>
 
   <main class="content">
@@ -22,7 +21,7 @@
   <!-- Секция Профиль -->
     <section class="profile">
       <div class="profile__user">
-        <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар">
+        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Аватар">
         <div class="profile__intro">
           <h1 class="profile__title" >Жак-Ив Кусто</h1>
           <button class="profile__edit-button link-hover" type="button" aria-label="Добавить место"></button>
@@ -144,8 +143,6 @@
         </div>
       </article>
     </template>
-
-    <script type="module" src="./pages/index.js"></script>
 
 </body>
 </html>

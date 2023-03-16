@@ -37,4 +37,9 @@ JS
 * и FormValidator, который настраивает валидацию полей формы.
 
 
+*В рамках ПР8 выполнен следущий объем работы:*
+* созданы классы Сard, FormValidator, UserInfo, Section, Popup, PopupWithForm, PopupWithImage
+* настроена сборка проекта вэбпаком
+
+
 Ссылка на GitHub Pages https://natabr1.github.io/mesto/
