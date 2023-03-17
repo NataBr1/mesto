@@ -22,10 +22,14 @@ const userInfo = new UserInfo({
 });
 
 
+// Создаем экземпляр класса просмотра изображения
+const popupWithImage = new PopupWithImage('.view');
+popupWithImage.setEventListeners();
+
+
 //Функция открытия попапа просмотра изображения
 function handleCardClick(name, link) {
-  const viewPhoto = new PopupWithImage('.view');
-  viewPhoto.open(name, link);
+  popupWithImage.open(name, link);
 };
 
 
@@ -72,16 +76,11 @@ popupEditProfile.setEventListeners();
 // Слушатель на кнопку редактирования профиля
 popupOpenButtonElementUser.addEventListener('click', () => {
   const userData = userInfo.getUserInfo();
-  nameUserInput.value = userInfo.getUserInfo().userName;
-  jobInput.value = userInfo.getUserInfo().userJob
+  nameUserInput.value = userData.userName;
+  jobInput.value = userData.userJob;
   popupEditProfile.open();
   userFormValidator.resetValidation();
 });
-
-
-// Создаем экземпляр класса просмотра изображения
-const popupWithImage = new PopupWithImage('.view');
-popupWithImage.setEventListeners();
 
 
 // Создаем экземпляры класса валидации для форм
