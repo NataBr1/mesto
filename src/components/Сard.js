@@ -1,9 +1,14 @@
 export default class Card {
-  constructor (data, templateSelector, handleCardClick) {
+  constructor (data,templateSelector, handleCardClick, {deleteCard}, id) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._id = id;// мой айди
+    this._cardOwnerId = data.owner._id; // айди автора карточки
+    this._cardId = data._id;// айди карточки
+
+    this._deleteCard = deleteCard;
   }
 
   // Метод возвращения разметки карточки
@@ -41,9 +46,13 @@ export default class Card {
     this._cardLike.addEventListener('click', () => {
       this._handleLikeClick();
     });
+
+  if (this._id === this._cardOwnerId) {
     this._cardDelete.addEventListener('click', () => {
-      this._handleCardDelete();
+      this._deleteCard(this._cardId);
     });
+  } else {this._cardDelete.remove()};
+
     this._cardPhoto.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     });
@@ -55,9 +64,8 @@ export default class Card {
   }
 
   // Метод удаления карточки
-  _handleCardDelete() {
+  handleCardDelete() {
     this._element.remove();
+    this._element = null;
   }
 }
-
-

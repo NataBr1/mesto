@@ -3,7 +3,7 @@ import Section from '../components/Section.js';
 import FormValidation from '../components/FormValidator.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-//import PopupWithQuestion from '../components/PopupWithQuestion.js';
+import PopupWithQuestion from '../components/PopupWithQuestion.js';
 import UserInfo from '../components/UserIfo.js';
 import Api from '../components/Api.js';
 import {objForValidation} from '../utils/constants.js';
@@ -29,11 +29,14 @@ const api = new Api({
   }
 });
 
-//Отрисовываем карточки и информацию о пользователе с сервера
-Promise.all([api.getInitialCards(), api.getUserInfo()])
-  .then(([cardData, res]) => {
+let id = "start";
+
+//Получаем карточки и информацию о пользователе с сервера
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([res, cardData]) => {
     userInfo.setUserInfo(res);
-    defaultCardList.renderItems(cardData);
+    id = res._id;
+    defaultCardList.renderItems(cardData.reverse());
   })
   .catch((err) => console.log(err));
 
@@ -59,7 +62,19 @@ function handleCardClick(name, link) {
 
 //Функция добавления новой карточки
 const createCard = (cardData) => {
-  const card = new Card(cardData, '#cards', handleCardClick);
+  const card = new Card(cardData, '#cards', handleCardClick,
+  {deleteCard: (cardId) => {
+    popupWithQuestion.open();
+    popupWithQuestion.submitCallback(() => {
+      api.deleteCard(cardId)
+        .then(() => {
+          card.handleCardDelete();
+        })
+        .catch((err) => {
+          console.log(`${err}`);
+        })
+    });
+  }}, id);
   const cardElement = card.generateCard();
   return cardElement;
 };
@@ -101,7 +116,6 @@ popupOpenButtonElementPlace.addEventListener('click', () => {
 //Создаем экземпляр класса для попапа редактирования профиля
 const popupEditProfile = new PopupWithForm('.popup_user', {
   handleFormSubmit: (data) => {
-    //userInfo.setUserInfo(nameUser, jobUser);
     renderLoading(true);
     api.changeUserInfo(data)
       .then((res) => {
@@ -141,10 +155,14 @@ const popupEditAvatar = new PopupWithForm('.popup_avatar', {
 });
 popupEditAvatar.setEventListeners();
 
+//Слушатель на кнопку редактирования аватара
 buttonEditAvatar.addEventListener('click', () => {
   popupEditAvatar.open();
   avatarFormValidator.resetValidation();
 });
+
+const popupWithQuestion = new PopupWithQuestion('.popup_deletecard');
+popupWithQuestion.setEventListeners();
 
 
 // Создаем экземпляры класса валидации для форм
