@@ -3,10 +3,16 @@ export const popupElementUser = document.querySelector('.popup_user'); /* Поп
 export const popupElementPlace = document.querySelector('.popup_place') /* Попап добавления карточки */
 export const popupOpenButtonElementUser = document.querySelector('.profile__edit-button'); /* Кнопка открытия попапа профиля */
 export const popupOpenButtonElementPlace = document.querySelector('.profile__add-button'); /* Кнопка открытия попапа новой карточки */
+export const buttonEditAvatar = document.querySelector('.profile__avatar-edit');
 export const popupElementView = document.querySelector('.view'); /* Попап просмотра изображения */
+export const popupElementAvatar = document.querySelector('.popup_avatar')
 export const formElementUser = document.forms.popupFormUser;
 export const nameUserInput = formElementUser.elements.nameUser;
 export const jobInput = formElementUser.elements.jobUser;
+export const formElementAvatar = document.forms.popupFormAvatar;
+export const avatarInput = popupFormAvatar.elements.avatar;
+export const trash = document.querySelector('.element__delete');
+export const submitButtons = document.querySelectorAll('.popup__button');
 
 export const objForValidation = ({
   formSelector: '.popup__form',

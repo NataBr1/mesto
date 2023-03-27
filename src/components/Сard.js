@@ -7,7 +7,7 @@ export default class Card {
   }
 
   // Метод возвращения разметки карточки
-  _getTamplate() {
+  _getTemplate() {
     const cardElement = document
     .querySelector(this._templateSelector)
     .content
@@ -19,12 +19,13 @@ export default class Card {
 
   // Публичный метод возвращающий готовую разметку карточки
   generateCard() {
-    this._element = this._getTamplate();
+    this._element = this._getTemplate();
 
     this._cardPhoto = this._element.querySelector('.element__photo');
     this._cardName = this._element.querySelector('.element__title');
     this._cardLike = this._element.querySelector('.element__like');
     this._cardDelete = this._element.querySelector('.element__delete');
+    this._likesCounter = this._element.querySelector('.element__like-number');
 
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = this._name;
