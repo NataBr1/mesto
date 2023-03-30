@@ -115,7 +115,7 @@ const defaultCardList = new Section ({
 //Создаем экземплряр класса для попапа добавления карточки
 const popupAddPlace = new PopupWithForm('.popup_place', {
   handleFormSubmit: (data) => {
-    renderLoading(true);
+    popupAddPlace.addRenderLoading();
     api.addCard(data)
       .then((res) => {console.log(res)
         defaultCardList.addItem(createCard(res));
@@ -125,7 +125,7 @@ const popupAddPlace = new PopupWithForm('.popup_place', {
         console.log(`${err}`);
       })
       .finally(() => {
-        renderLoading(false);
+        popupAddPlace.startRenderLoading();
       })
     }
 })
@@ -141,7 +141,7 @@ popupOpenButtonElementPlace.addEventListener('click', () => {
 //Создаем экземпляр класса для попапа редактирования профиля
 const popupEditProfile = new PopupWithForm('.popup_user', {
   handleFormSubmit: (data) => {
-    renderLoading(true);
+    popupEditProfile.addRenderLoading();
     api.changeUserInfo(data)
       .then((res) => {
         userInfo.setUserInfo(res);
@@ -149,7 +149,7 @@ const popupEditProfile = new PopupWithForm('.popup_user', {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        renderLoading (false)
+        popupEditProfile.startRenderLoading();
       });
   }
 });
@@ -168,7 +168,7 @@ popupOpenButtonElementUser.addEventListener('click', () => {
 // Создаем экземпляр класса для попапа изменения аватара
 const popupEditAvatar = new PopupWithForm('.popup_avatar', {
   handleFormSubmit: (userAvatar) => {
-    renderLoading(true);
+    popupEditAvatar.addRenderLoading();
     api.changeAvatar(userAvatar)
       .then((data) => {
         userInfo.setUserInfo(data);
@@ -176,7 +176,7 @@ const popupEditAvatar = new PopupWithForm('.popup_avatar', {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        renderLoading (false)
+        popupEditAvatar.startRenderLoading();
       });
   }
 });
@@ -201,17 +201,3 @@ placeFormValidator.enableValidation(popupElementPlace);
 
 const avatarFormValidator = new FormValidation(objForValidation, popupElementAvatar);
 avatarFormValidator.enableValidation(popupEditAvatar)
-
-
-//Функция изменение текста на кнопке сабмита во время загрузки информации
-function renderLoading (isLoading) {
-  if(isLoading) {
-    Array.from(submitButtons).forEach((submitButton) => {
-      submitButton.textContent = 'Сохранение...';
-    })
-  } else {
-    Array.from(submitButtons).forEach((submitButton) => {
-      submitButton.textContent = 'Сохранить';
-    })
-  }
-}
