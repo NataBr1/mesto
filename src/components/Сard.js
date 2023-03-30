@@ -4,9 +4,9 @@ export default class Card {
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
-    this._id = id;// мой айди
-    this._cardOwnerId = data.owner._id; // айди автора карточки
-    this._cardId = data._id;// айди карточки
+    this._id = id;
+    this._cardOwnerId = data.owner._id;
+    this._cardId = data._id;
     this._deleteCard = deleteCard;
     this._likes = data.likes;
     this._handleLikeClick = handleLikeClick;
@@ -38,8 +38,9 @@ export default class Card {
     this._cardPhoto.alt = this._name;
     this._cardName.textContent = this._name;
 
-    this._likesCounter.textContent = this._likes.length;
+    this.showCounterLike(this._likes);
     this._setEventListners();
+    this._toggleLikeState();
 
     return this._element;
   }
@@ -67,15 +68,19 @@ export default class Card {
     this._element = null;
   }
 
-// Метод лайка
+  // Методы лайка
   _handleLikeClick() {
     this._cardLike.classList.toggle('element__like_active');
 
   }
 
-  toggleLikeState(calc) {
+  _toggleLikeState() {
     this.checkOwnerLike() ? this.addLike() : this.deleteLike();
-    this._likesCounter.textContent = calc;
+  }
+
+  showCounterLike(data) {
+    this._likes = data;
+    this._likesCounter.textContent = this._likes.length;
   }
 
   checkOwnerLike() {
@@ -95,11 +100,3 @@ export default class Card {
     return this._cardId;
   }
 }
-
-
-
-// _showCounterLike() {
-//   if (this._likes.length >= 1) {
-//     this._likesCounter.textContent = this._likes.length;
-//   } else {this._likesCounter.remove()};
-// }

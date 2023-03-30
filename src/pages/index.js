@@ -60,7 +60,6 @@ function handleCardClick(name, link) {
 };
 
 
-
 //Функция добавления новой карточки
 const createCard = (cardData) => {
   const card = new Card(cardData, '#cards', handleCardClick,
@@ -70,6 +69,7 @@ const createCard = (cardData) => {
       api.deleteCard(cardId)
         .then(() => {
           card.handleCardDelete();
+          popupWithQuestion.close();
         })
         .catch((err) => {
           console.log(`${err}`);
@@ -80,9 +80,8 @@ const createCard = (cardData) => {
     if(card.checkOwnerLike()) {
       api.removeLike(card.getCardId())
         .then((res) => {
-          card.toggleLikeState(res.likes.length);
           card.deleteLike();
-
+          card.showCounterLike(res.likes);
         })
         .catch((err) => {
           console.log(`${err}`);
@@ -90,8 +89,9 @@ const createCard = (cardData) => {
     } else {
       api.putLike(card.getCardId())
         .then((res) => {
-          card.toggleLikeState(res.likes.length);
           card.addLike();
+          card.showCounterLike(res.likes);
+
         })
         .catch((err) => {
           console.log(`${err}`);
@@ -119,6 +119,7 @@ const popupAddPlace = new PopupWithForm('.popup_place', {
     api.addCard(data)
       .then((res) => {console.log(res)
         defaultCardList.addItem(createCard(res));
+        popupAddPlace.close();
         })
       .catch((err) => {
         console.log(`${err}`);
@@ -144,6 +145,7 @@ const popupEditProfile = new PopupWithForm('.popup_user', {
     api.changeUserInfo(data)
       .then((res) => {
         userInfo.setUserInfo(res);
+        popupEditProfile.close();
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -170,6 +172,7 @@ const popupEditAvatar = new PopupWithForm('.popup_avatar', {
     api.changeAvatar(userAvatar)
       .then((data) => {
         userInfo.setUserInfo(data);
+        popupEditAvatar.close();
       })
       .catch((err) => console.log(err))
       .finally(() => {
