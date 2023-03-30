@@ -9,9 +9,6 @@ export const popupElementAvatar = document.querySelector('.popup_avatar')
 export const formElementUser = document.forms.popupFormUser;
 export const nameUserInput = formElementUser.elements.nameUser;
 export const jobInput = formElementUser.elements.jobUser;
-export const formElementAvatar = document.forms.popupFormAvatar;
-export const avatarInput = popupFormAvatar.elements.avatar;
-export const trash = document.querySelector('.element__delete');
 export const submitButtons = document.querySelectorAll('.popup__button');
 
 export const objForValidation = ({

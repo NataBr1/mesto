@@ -29,7 +29,7 @@ const api = new Api({
   }
 });
 
-let id = "start";
+let id;
 
 //Получаем карточки и информацию о пользователе с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -60,6 +60,7 @@ function handleCardClick(name, link) {
 };
 
 
+
 //Функция добавления новой карточки
 const createCard = (cardData) => {
   const card = new Card(cardData, '#cards', handleCardClick,
@@ -74,7 +75,30 @@ const createCard = (cardData) => {
           console.log(`${err}`);
         })
     });
-  }}, id);
+  },
+  handleLikeClick: () => {
+    if(card.checkOwnerLike()) {
+      api.removeLike(card.getCardId())
+        .then((res) => {
+          card.toggleLikeState(res.likes.length);
+          card.deleteLike();
+
+        })
+        .catch((err) => {
+          console.log(`${err}`);
+        });
+    } else {
+      api.putLike(card.getCardId())
+        .then((res) => {
+          card.toggleLikeState(res.likes.length);
+          card.addLike();
+        })
+        .catch((err) => {
+          console.log(`${err}`);
+        });
+    }
+  }
+}, id);
   const cardElement = card.generateCard();
   return cardElement;
 };
